@@ -36,22 +36,23 @@ namespace MarsFramework.Pages
         private IWebElement SubCategoryDropDown { get; set; }
 
         //Enter Tag names in textbox
-        [FindsBy(How = How.XPath, Using = "//body/div/div/div[@id='service-listing-section']/div[contains(@class,'ui container')]/div[contains(@class,'listing')]/form[contains(@class,'ui form')]/div[contains(@class,'tooltip-target ui grid')]/div[contains(@class,'twelve wide column')]/div[contains(@class,'')]/div[contains(@class,'ReactTags__tags')]/div[contains(@class,'ReactTags__selected')]/div[contains(@class,'ReactTags__tagInput')]/input[1]")]
+        [FindsBy(How = How.XPath, Using = "//input[@class='ReactTags__tagInputField'][1]")]
         private IWebElement Tags { get; set; }
 
        
 
         //Select the Service type
-        [FindsBy(How = How.XPath, Using = "//form/div[5]/div[@class='twelve wide column']/div/div[@class='field']")]
+
+        [FindsBy(How = How.XPath, Using = "(//input[@name='serviceType'])[1]")]
         private IWebElement ServiceTypeOptions { get; set; }
-        [FindsBy(How = How.XPath, Using = "//*[@id='service-listing-section']/div[2]/div/form/div[5]/div[2]/div[1]/div[2]/div/input")]
+        [FindsBy(How = How.XPath, Using = "(//input[@name='serviceType'])[2]")]
         private IWebElement Servicetyp { get; set; }
        
         //Select the Location Type
-        [FindsBy(How = How.XPath, Using = "//form/div[6]/div[@class='twelve wide column']/div/div[@class = 'field']")]
+        [FindsBy(How = How.XPath, Using = "(//input[@name='locationType'])[1]")]
         private IWebElement LocationTypeOption { get; set; }
 
-        [FindsBy(How = How.XPath, Using = "//*[@id='service-listing-section']/div[2]/div/form/div[6]/div[2]/div/div[1]/div/input")]
+        [FindsBy(How = How.XPath, Using = "(//input[@name='locationType'])[2]")]
         private IWebElement LocationSel { get; set; }
         
          [FindsBy(How = How.XPath, Using = "//input[@name='Available'][@index='0']")]
@@ -88,7 +89,7 @@ namespace MarsFramework.Pages
         private IWebElement Day { get; set; }
 
         //Storing the starttime
-        [FindsBy(How = How.XPath, Using = "//*[@id='service-listing-section']/div[2]/div/form/div[7]/div[2]/div/div[3]/div[2]/input")]
+        [FindsBy(How = How.XPath, Using = "(//input[contains(@name,'serviceType')])[2]")]
         public IWebElement StartTime { get; set; }
 
         //Click on StartTime dropdown
@@ -96,7 +97,7 @@ namespace MarsFramework.Pages
         private IWebElement StartTimeDropDown { get; set; }
 
         //Storing the Endtime
-        [FindsBy(How = How.XPath, Using = "//*[@id='service-listing-section']/div[2]/div/form/div[7]/div[2]/div/div[3]/div[3]/input")]
+        [FindsBy(How = How.XPath, Using = "(//input[@name='EndTime'])[2]")]
         public IWebElement EndTime { get; set; }
 
         //Click on EndtTime dropdown
@@ -104,23 +105,22 @@ namespace MarsFramework.Pages
         private IWebElement EndTimeDropDown { get; set; }
 
         //Click on Skill Trade option
-        [FindsBy(How = How.XPath, Using = "//form/div[8]/div[@class='twelve wide column']/div/div[@class = 'field']")]
+        [FindsBy(How = How.XPath, Using = "(//input[contains(@name,'skillTrades')])[1]")]
         private IWebElement SkillTradeOption { get; set; }
 
         //Click SkillActiveOptions
-        [FindsBy(How = How.XPath, Using = "//form/div[10]/div[@class='twelve wide column']/div/div[@class = 'field']" +
-            "")]
+        [FindsBy(How = How.XPath, Using = "//input[@name='isActive']")]
         private IWebElement SkillActiveOptions { get; set; }
         
         //Enter Skill Exchange
-        [FindsBy(How = How.XPath, Using = "//*[@id='service-listing-section']/div[2]/div/form/div[8]/div[4]/div/div/div/div/div/input")]
+        [FindsBy(How = How.XPath, Using = "(//input[contains(@class,'tagInputField')])[2]")]
         private IWebElement SkillExctxtbx { get; set; }
 
         //Click on Active/Hidden option
-        [FindsBy(How = How.XPath, Using = "//form/div[10]/div[@class='twelve wide column']/div/div[@class = 'field'][1]")]
+        [FindsBy(How = How.XPath, Using = "(//input[@name='isActive'])[1]")]
         private IWebElement ActiveOption { get; set; }
 
-        [FindsBy(How = How.XPath, Using = "//form/div[10]/div[@class='twelve wide column']/div/div[@class = 'field'][2]")]
+        [FindsBy(How = How.XPath, Using = "(//input[@name='isActive'])[2]")]
         private IWebElement HiddenOption { get; set; }
 
         //Click on Save button
@@ -129,7 +129,7 @@ namespace MarsFramework.Pages
 
         //Validate share skill details
         //Click on manage listing
-        [FindsBy(How = How.XPath, Using = "//*[@id=\"listing-management-section\"]/div[2]/div[1]/div[2]/button[2]")]
+        [FindsBy(How = How.XPath, Using = "(//a[@class='item'])[11]")]
         private IWebElement ManageListbtn { get; set; }
 
         #endregion
@@ -186,7 +186,7 @@ namespace MarsFramework.Pages
                 Servicetyp.Click();
 
                 //Select the Location Type
-                GlobalDefinitions.WaitForElement(GlobalDefinitions.driver, "XPath", "//form/div[6]/div[@class='twelve wide column']/div/div[@class = 'field']", 10000);
+                GlobalDefinitions.WaitForElement(GlobalDefinitions.driver, "XPath", "(//input[@name='locationType'])[1]", 10000);
                 LocationTypeOption.Click();
                 LocationSel.Click();
                
@@ -269,16 +269,16 @@ namespace MarsFramework.Pages
             GlobalDefinitions.ExcelLib.PopulateInCollection(Base.ExcelPath, "ShareSkill");
             
             //Verify share skill details
-            GlobalDefinitions.WaitForElement(GlobalDefinitions.driver, "XPath", "//*[@id=\"listing-management-section\"]/div[2]/div[1]/div[2]/button[2]", 10000);
+            GlobalDefinitions.WaitForElement(GlobalDefinitions.driver, "XPath", "(//a[@class='item'])[11]", 10000);
             ManageListbtn.Click();
             try
             {
-                GlobalDefinitions.WaitForElement(GlobalDefinitions.driver, "XPath", "//*[@id='listing-management-section']/div[2]/div[1]/div[1]/table/tbody/tr[1]/td[2]", 10000);
-                var categorycheck = GlobalDefinitions.driver.FindElement(By.XPath("//*[@id='listing-management-section']/div[2]/div[1]/div[1]/table/tbody/tr[1]/td[2]")).GetAttribute("textContent");
+                GlobalDefinitions.WaitForElement(GlobalDefinitions.driver, "XPath", "(//td[@class='one wide'])[2]", 10000);
+                var categorycheck = GlobalDefinitions.driver.FindElement(By.XPath("(//td[@class='one wide'])[2]")).GetAttribute("textContent");
                 Assert.That(categorycheck, Is.EqualTo(GlobalDefinitions.ExcelLib.ReadData(2, "Category")));
 
-               GlobalDefinitions.WaitForElement(GlobalDefinitions.driver, "XPath", "//*[@id='listing-management-section']/div[2]/div[1]/div[1]/table/tbody/tr[1]/td[3]", 10000);
-                var titlecheck = GlobalDefinitions.driver.FindElement(By.XPath("//*[@id='listing-management-section']/div[2]/div[1]/div[1]/table/tbody/tr[1]/td[3]")).GetAttribute("textContent");
+               GlobalDefinitions.WaitForElement(GlobalDefinitions.driver, "XPath", "(//td[contains(@class,'four wide')])[1]", 10000);
+                var titlecheck = GlobalDefinitions.driver.FindElement(By.XPath("(//td[contains(@class,'four wide')])[1]")).GetAttribute("textContent");
                 Assert.That(titlecheck, Is.EqualTo(GlobalDefinitions.ExcelLib.ReadData(2, "Title")));
             }
             catch (Exception ex)

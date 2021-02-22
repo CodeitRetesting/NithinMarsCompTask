@@ -23,12 +23,12 @@ namespace MarsFramework.Pages
         private IWebElement view { get; set; }
 
         //View listing validation
-        [FindsBy(How = How.XPath, Using = " //*[@id='service-detail-section']/div[2]/div/div[2]/div[1]/div[1]/div[2]/h1/span")]
+        [FindsBy(How = How.XPath, Using = "//span[contains(@class,'skill-title')]")]
         private IWebElement ViewValidation { get; set; }
 
 
         //Edit the listing
-        [FindsBy(How = How.XPath, Using = "//*[@id='listing-management-section']/div[2]/div[1]/div[1]/table/tbody/tr[1]/td[8]/div/button[2]/i")]
+        [FindsBy(How = How.XPath, Using = "(//i[contains(@class,'outline write icon')])[1]")]
         private IWebElement edit { get; set; }
 
         //Select Title to edit
@@ -41,14 +41,14 @@ namespace MarsFramework.Pages
 
 
         //Delete the listing
-        [FindsBy(How = How.XPath, Using = "//*[@id='listing-management-section']/div[2]/div[1]/div[1]/table/tbody/tr[1]/td[8]/div/button[3]/i")]
+        [FindsBy(How = How.XPath, Using = "(//i[@Class='remove icon'])[1]")]
         private IWebElement delete { get; set; }
 
         //Click on Yes or No
         [FindsBy(How = How.XPath, Using = "//div[@class='actions']")]
         private IWebElement clickActionsButton { get; set; }
 
-        [FindsBy(How = How.XPath, Using = "/html/body/div[2]/div/div[3]/button[2]/i")]
+        [FindsBy(How = How.XPath, Using = "//button[contains(.,'Yes')]")]
         private IWebElement yesBtn { get; set; }
         #endregion
 
@@ -105,7 +105,7 @@ namespace MarsFramework.Pages
             manageListingsLink.Click();
 
             //Click on Edit button
-            GlobalDefinitions.WaitForElementVisibility(GlobalDefinitions.driver, "XPath", "//*[@id='listing-management-section']/div[2]/div[1]/div[1]/table/tbody/tr[1]/td[8]/div/button[2]/i", 10000);
+            GlobalDefinitions.WaitForElementVisibility(GlobalDefinitions.driver, "XPath", "(//i[contains(@class,'outline write icon')])[1]", 10000);
             edit.Click();
 
             //Edit title
@@ -141,8 +141,8 @@ namespace MarsFramework.Pages
             GlobalDefinitions.driver.Navigate().Refresh();
             try
             {
-                GlobalDefinitions.WaitForElement(GlobalDefinitions.driver, "XPath", "//*[@id='service-detail-section']/div[2]/div/div[2]/div[1]/div[1]/div[2]/h1/span", 20000);
-                var ViewValidation = GlobalDefinitions.driver.FindElement(By.XPath("//*[@id='service-detail-section']/div[2]/div/div[2]/div[1]/div[1]/div[2]/h1/span")).Text;
+                GlobalDefinitions.WaitForElement(GlobalDefinitions.driver, "XPath", "//span[@class='skill-title']", 20000);
+                var ViewValidation = GlobalDefinitions.driver.FindElement(By.XPath("//span[@class='skill-title']")).Text;
                 Assert.That(ViewValidation, Is.EqualTo(GlobalDefinitions.ExcelLib.ReadData(3, "Title")));
             }
             catch (Exception ex)
@@ -165,7 +165,7 @@ namespace MarsFramework.Pages
             manageListingsLink.Click();
 
             //Click on delete button
-            GlobalDefinitions.WaitForElementVisibility(GlobalDefinitions.driver, "XPath", "//*[@id='listing-management-section']/div[2]/div[1]/div[1]/table/tbody/tr[1]/td[8]/div/button[3]/i", 10000);
+            GlobalDefinitions.WaitForElementVisibility(GlobalDefinitions.driver, "XPath", "(//i[@class='remove icon'])[1]", 10000);
             delete.Click();
 
 
@@ -174,7 +174,7 @@ namespace MarsFramework.Pages
             //Select yes
             try
             {
-                GlobalDefinitions.WaitForElementVisibility(GlobalDefinitions.driver, "XPath", "/html/body/div[2]/div/div[3]/button[2]/i", 10000);
+                GlobalDefinitions.WaitForElementVisibility(GlobalDefinitions.driver, "XPath", "(//i[contains(@aria-hidden,'true')])[4]", 10000);
                 yesBtn.Click();
 
 
@@ -193,8 +193,8 @@ namespace MarsFramework.Pages
             try
             {
                 //Verify deleted details
-
-                var deletedListing = GlobalDefinitions.driver.FindElement(By.XPath("//*[@id='listing-management-section']/div[2]/div[1]/div[1]/table/tbody/tr/td[3]")).Text;
+                /*//*[@id='listing-management-section']/div[2]/div[1]/div[1]/table/tbody/tr/td[3]*/
+                var deletedListing = GlobalDefinitions.driver.FindElement(By.XPath("(//tbody/tr/td[@class='four wide'])")).Text;
                 if(deletedListing!= GlobalDefinitions.ExcelLib.ReadData(3, "Title"))
                 {
                     Assert.Pass("Manage Listing deleted successfuly");
