@@ -75,8 +75,8 @@ namespace MarsFramework.Pages
             GlobalDefinitions.driver.Navigate().Refresh();
             try
             {
-                GlobalDefinitions.WaitForElement(GlobalDefinitions.driver, "XPath", "//*[@id='service-detail-section']/div[2]/div/div[2]/div[1]/div[1]/div[2]/h1/span", 40000);
-                var ViewValidation = GlobalDefinitions.driver.FindElement(By.XPath("//*[@id='service-detail-section']/div[2]/div/div[2]/div[1]/div[1]/div[2]/h1/span")).Text;
+                GlobalDefinitions.WaitForElement(GlobalDefinitions.driver, "XPath", "//span[@class='skill-title']", 40000);
+                var ViewValidation = GlobalDefinitions.driver.FindElement(By.XPath("//span[@class='skill-title']")).Text;
                 Assert.That(ViewValidation, Is.EqualTo(GlobalDefinitions.ExcelLib.ReadData(2, "Title")));
             }
             catch (Exception ex)
